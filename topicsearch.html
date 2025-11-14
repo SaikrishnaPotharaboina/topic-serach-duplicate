@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Topic search</title>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <!-- Root for React -->
+    <div id="root"></div>
+
+    <!-- Optional containers if you want to use them elsewhere -->
+    <div class="js-container" style="display:none"></div>
+    <div class="js-mini-container" style="display:none"></div>
+
+    <!-- Using the same CDN scripts you used -->
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+
+    <!-- Your React code (Babel will compile) -->
+    <script type="text/babel">
+      // Because React is loaded globally, reference hooks as React.useState
+      const TopicSearch = () => {
+        const [search, setSearch] = React.useState("");
+
+        // Visible topics (always shown when search is empty)
+        const visibleTopics = [
+          { id: 1, name: "Artificial Intelligence", category: "Technology" },
+          { id: 2, name: "Cyber Security", category: "Technology" },
+          { id: 3, name: "UI/UX Design", category: "Design" },
+          { id: 4, name: "Chemistry Basics", category: "Science" },
+          { id: 5, name: "Algebra", category: "Mathematics" },
+        ];
+
+        // Hidden topics (only included when user types)
+        const hiddenTopics = [
+          { id: 6, name: "Quantum Computing", category: "Advanced Technology" },
+          { id: 7, name: "Machine Learning", category: "AI" },
+          { id: 8, name: "Astrophysics", category: "Space Science" },
+          { id: 9, name: "Robotics Engineering", category: "Engineering" },
+          { id: 10, name: "Data Mining", category: "Computer Science" },
+        ];
+
+        // If search is empty -> show only visibleTopics.
+        // If user typed something -> search both lists.
+        const topicsToSearch =
+          search.trim() === "" ? visibleTopics : [...visibleTopics, ...hiddenTopics];
+
+        const filteredTopics = topicsToSearch.filter((topic) =>
+          topic.name.toLowerCase().includes(search.toLowerCase())
+        );
+
+        return (
+          <div
+            style={{
+              maxWidth: "600px",
+              margin: "50px auto",
+              padding: "20px",
+              fontFamily: "Arial, sans-serif",
+            }}
+          >
+            <h2
+              style={{
+                textAlign: "center",
+                marginBottom: "25px",
+                fontSize: "28px",
+                fontWeight: "bold",
+                color: "#333",
+              }}
+            >
+              Topic Search
+            </h2>
+
+            <input
+              type="text"
+              placeholder="Search topics..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              style={{
+                width: "100%",
+                padding: "14px",
+                borderRadius: "12px",
+                border: "1px solid #ccc",
+                fontSize: "16px",
+                outline: "none",
+                marginBottom: "25px",
+                boxShadow: "0 2px 5px rgba(0, 0, 0, 0.08)",
+              }}
+            />
+
+            <div style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
+              {filteredTopics.length > 0 ? (
+                filteredTopics.map((topic) => (
+                  <div
+                    key={topic.id}
+                    style={{
+                      padding: "18px",
+                      borderRadius: "12px",
+                      backgroundColor: "#ffffff",
+                      border: "1px solid #eee",
+                      boxShadow: "0 4px 10px rgba(0, 0, 0, 0.05)",
+                    }}
+                  >
+                    <h3 style={{ margin: 0 }}>{topic.name}</h3>
+                    <p style={{ marginTop: "5px", color: "#666" }}>{topic.category}</p>
+                  </div>
+                ))
+              ) : (
+                <p
+                  style={{
+                    textAlign: "center",
+                    color: "#ff3b3b",
+                    fontSize: "18px",
+                    marginTop: "20px",
+                    fontWeight: "bold",
+                  }}
+                >
+                  No topics found
+                </p>
+              )}
+            </div>
+          </div>
+        );
+      };
+
+      function App() {
+        return (
+          <div>
+            <TopicSearch />
+          </div>
+        );
+      }
+
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+      root.render(<App />);
+    </script>
+  </body>
+</html>
