@@ -4,7 +4,7 @@ The **original full project (with complete code)** is already available in my Gi
 I used this duplicate because of **file size / MB issue**, but **both projects work the same** and give the **same output**.  
 This duplicate contains a readable version of the code for checking.
 
-
+###
 TopicSearch
 Overview
 TopicSearch is a React-based searching component that displays a list of topics with live filtering. It includes visible topics (shown by default) and hidden topics (only appear when searched). The UI is fully styled using inline CSS.
